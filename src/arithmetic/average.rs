@@ -1,3 +1,12 @@
+/*
+Módulo de Cálculos de Médias e Problemas com Valores Desconhecidos
+
+Este módulo oferece estruturas para resolver problemas matemáticos com médias e valores desconhecidos.
+
+Exemplo de Problema: A idade média de Mariana e Beatriz é de 85 anos.
+Se a média entre Mariana, Beatriz e Fábio é 90, qual a idade de Fábio?
+*/
+
 pub struct AverageProblem {
     pub number_of_people: u32,
     pub group_average: f64,
@@ -16,6 +25,7 @@ impl AverageProblem {
         }
     }
 
+    // Calcula o total de valores do grupo
     pub fn calculate_total(&self) -> f64 {
         self.group_average * self.number_of_people as f64
     }
@@ -29,37 +39,34 @@ impl AverageProblemWithIncognito {
         }
     }
 
+    // Calcula o valor da pessoa desconhecida
     pub fn calculate_new_average(&self) -> f64 {
         let new_total =
             self.new_total_average * (self.initial_group_average.number_of_people + 1) as f64;
         let initial_total = self.initial_group_average.calculate_total();
-
         new_total - initial_total
     }
 }
 
+// Testes
 #[cfg(test)]
 mod tests {
     use super::*;
-
     #[test]
     fn test_average_calculation() {
         let problem = AverageProblem::new(3, 90.0);
         assert_eq!(problem.calculate_total(), 270.0);
     }
-
     #[test]
     fn test_basic_average() {
         let problem = AverageProblem::new(2, 85.0);
         assert_eq!(problem.calculate_total(), 170.0);
     }
-
     #[test]
     fn test_new_person_average() {
         let problem = AverageProblemWithIncognito::new(2, 85.0, 90.0);
         assert_eq!(problem.calculate_new_average(), 100.0);
     }
-
     #[test]
     fn test_another_scenario() {
         let problem = AverageProblemWithIncognito::new(3, 70.0, 75.0);
